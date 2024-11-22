@@ -12,11 +12,17 @@
   <div id="animation-wrapper" class="animation-wrapper">
     <span id="animation-result" class="animation-text"></span>
   </div>
-  <span id="firstOperand" class="operand"></span>
-  <span id="operator" class="operand"></span>
-  <span id="secondOperand" class="operand"></span>
-  <span>=</span>
-  <input type="text" id="result-input" class="result-input" autocomplete="off" maxlength="4" />
+  <div class="score-wrapper">
+    <span>Corrects: <span id="score-corrects">0</span></span>
+    <span>Misses: <span id="score-misses">0</span></span>
+  </div>
+  <div class="game-wrapper">
+    <span id="firstOperand" class="operand"></span>
+    <span id="operator" class="operand"></span>
+    <span id="secondOperand" class="operand"></span>
+    <span>=</span>
+    <input type="text" id="result-input" class="result-input" autocomplete="off" maxlength="4" />
+  </div>
 
   <script src="/dist/scripts.js" defer></script>
 </body>

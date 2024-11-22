@@ -1,3 +1,8 @@
+let score = {
+  corrects: 0,
+  misses: 0,
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const firstOperand = document.querySelector<HTMLSpanElement>("#firstOperand");
   const secondOperand =
@@ -8,12 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const animationResult =
     document.querySelector<HTMLSpanElement>("#animation-result");
 
+  const scoreCorrectsEl =
+    document.querySelector<HTMLInputElement>("#score-corrects");
+  const scoreMissesEl =
+    document.querySelector<HTMLInputElement>("#score-misses");
+
   if (
     !firstOperand ||
     !secondOperand ||
     !operator ||
     !userResult ||
-    !animationResult
+    !animationResult ||
+    !scoreCorrectsEl ||
+    !scoreMissesEl
   ) {
     console.error("Missing element");
     return;
@@ -61,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result === parseFloat(userResult.value)) {
           animationResult.classList.add("animation-result");
           animationResult.textContent = "CORRECT!";
+          score.corrects = score.corrects + 1;
+          scoreCorrectsEl.textContent = score.corrects.toString();
           animationResult.addEventListener("animationend", () => {
             setTimeout(() => {
               animationResult.style.opacity = "0";
@@ -70,6 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 200);
           });
         } else {
+          score.misses = score.misses + 1;
+          scoreMissesEl.textContent = score.misses.toString();
         }
       }
     };

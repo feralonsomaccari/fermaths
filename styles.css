@@ -6,21 +6,41 @@ html,
 body {
   box-sizing: border-box;
   color: black;
-  width: 200px;
+  width: 220px;
   height: 77px;
   position: relative;
+  font-family: Arial, Geneva, Tahoma, sans-serif;
+  text-transform: uppercase;
 }
 
 body {
-  padding: 32px;
   background-size: 32px 32px;
   background-image: linear-gradient(to right, lightgray 1px, transparent 1px),
     linear-gradient(to bottom, lightgray 1px, transparent 1px);
 }
 
+.score-wrapper span:nth-child(1) {
+  margin-left: 5px;
+  color: green;
+}
+
+.score-wrapper span:nth-child(2) {
+  margin-left: 5px;
+  color: red;
+}
+
+.score-wrapper span:nth-child(2) > span{
+  margin-left: 5px;
+  color: red;
+}
+
+
+.game-wrapper {
+  padding: 14px;
+}
+
 .operand {
   font-size: 16px;
-  font-family: Arial, Geneva, Tahoma, sans-serif;
 }
 
 .result-input {

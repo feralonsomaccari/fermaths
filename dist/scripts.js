@@ -1,15 +1,23 @@
 "use strict";
+let score = {
+    corrects: 0,
+    misses: 0,
+};
 document.addEventListener("DOMContentLoaded", () => {
     const firstOperand = document.querySelector("#firstOperand");
     const secondOperand = document.querySelector("#secondOperand");
     const operator = document.querySelector("#operator");
     const userResult = document.querySelector("#result-input");
     const animationResult = document.querySelector("#animation-result");
+    const scoreCorrectsEl = document.querySelector("#score-corrects");
+    const scoreMissesEl = document.querySelector("#score-misses");
     if (!firstOperand ||
         !secondOperand ||
         !operator ||
         !userResult ||
-        !animationResult) {
+        !animationResult ||
+        !scoreCorrectsEl ||
+        !scoreMissesEl) {
         console.error("Missing element");
         return;
     }
@@ -48,6 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result === parseFloat(userResult.value)) {
                     animationResult.classList.add("animation-result");
                     animationResult.textContent = "CORRECT!";
+                    score.corrects = score.corrects + 1;
+                    scoreCorrectsEl.textContent = score.corrects.toString();
                     animationResult.addEventListener("animationend", () => {
                         setTimeout(() => {
                             animationResult.style.opacity = "0";
@@ -57,6 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
                 else {
+                    score.misses = score.misses + 1;
+                    scoreMissesEl.textContent = score.misses.toString();
                 }
             }
         };
