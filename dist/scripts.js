@@ -21,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Missing element");
         return;
     }
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "KeyR") {
+            generateRandomOperation();
+        }
+    });
     userResult.focus();
     userResult.addEventListener("input", () => {
         userResult.value = userResult.value.replace(/[^0-9-]/g, "");
@@ -59,11 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     score.corrects = score.corrects + 1;
                     scoreCorrectsEl.textContent = score.corrects.toString();
                     animationResult.addEventListener("animationend", () => {
-                        setTimeout(() => {
-                            animationResult.style.opacity = "0";
-                            animationResult.style.transform = "scale(0)";
-                            generateRandomOperation();
-                        }, 200);
+                        animationResult.style.opacity = "0";
+                        animationResult.style.transform = "scale(0)";
+                        generateRandomOperation();
                     });
                 }
                 else {

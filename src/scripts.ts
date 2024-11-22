@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  document.addEventListener("keydown", (event) => {
+    if (event.code === "KeyR") {
+      generateRandomOperation();
+    }
+  });
+
   userResult.focus();
 
   userResult.addEventListener("input", () => {
@@ -40,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const generateRandomOperation = () => {
     const operators = ["+", "-", "x"];
 
-    const randomOperator = operators[Math.floor(Math.random() * operators.length)];
+    const randomOperator =
+      operators[Math.floor(Math.random() * operators.length)];
 
     operator.textContent = randomOperator;
 
@@ -76,12 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
           score.corrects = score.corrects + 1;
           scoreCorrectsEl.textContent = score.corrects.toString();
           animationResult.addEventListener("animationend", () => {
-            setTimeout(() => {
-              animationResult.style.opacity = "0";
-              animationResult.style.transform = "scale(0)";
-
-              generateRandomOperation();
-            }, 200);
+            animationResult.style.opacity = "0";
+            animationResult.style.transform = "scale(0)";
+            generateRandomOperation();
           });
         } else {
           score.misses = score.misses + 1;
