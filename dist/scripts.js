@@ -25,6 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.code === "KeyR") {
             generateRandomOperation();
         }
+        if (event.code === "KeyN") {
+            score.corrects = 0;
+            score.misses = 0;
+            scoreCorrectsEl.textContent = score.corrects.toString();
+            scoreMissesEl.textContent = score.misses.toString();
+        }
     });
     userResult.focus();
     userResult.addEventListener("input", () => {
@@ -40,7 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
         firstOperand.textContent = firstOperandValue.toString();
         secondOperand.textContent = secondOperandValue.toString();
         const handleOperation = (event) => {
-            if (event.key === "Enter" && document.activeElement === userResult) {
+            if (event.key === "Enter" &&
+                document.activeElement === userResult &&
+                userResult.value) {
                 let result;
                 switch (randomOperator) {
                     case "+":
