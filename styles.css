@@ -1,12 +1,15 @@
 :root {
   --primary-bg: #1e1e1e;
+  --primary-color: #494949;
+  --error-color: #DC143C ;
+  --success-color: limegreen;
 }
 
 html,
 body {
   box-sizing: border-box;
-  color: black;
-  width: 220px;
+  color: var(--primary-color);
+  width: 300px;
   height: 77px;
   position: relative;
   font-family: Arial, Geneva, Tahoma, sans-serif;
@@ -18,43 +21,47 @@ body {
     linear-gradient(to bottom, lightgray 1px, transparent 1px);
 }
 
-
 .score-wrapper {
   text-transform: uppercase;
-
 }
+
 .score-wrapper span:nth-child(1) {
-  margin-left: 5px;
+  margin-right: 5px;
   color: green;
 }
 
 .score-wrapper span:nth-child(2) {
   margin-left: 5px;
-  color: red;
+  color: var(--error-color);
 }
 
-.score-wrapper span:nth-child(2) > span{
+.score-wrapper span:nth-child(2) > span {
   margin-left: 5px;
-  color: red;
+  color: var(--error-color);
 }
-
 
 .game-wrapper {
-  padding: 14px;
+  padding: 14px 26px;
+  letter-spacing: 0.5px;
+  font-size: 24px;
 }
 
-.operand {
-  font-size: 16px;
+.game-wrapper span {
+  width: 26px;
+  display: inline-block;
+  text-align: center;
 }
 
 .result-input {
   padding: 0;
-  width: 40px;
-  font-size: 16px;
+  width: 75px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--primary-color);
   outline: none;
+  letter-spacing: 2.5px;
+  font-size: 24px;
+  color: var(--primary-color);
 }
 
 .animation-wrapper {
@@ -75,7 +82,7 @@ body {
   font-weight: bold;
   opacity: 0;
   transform: scale(0);
-  color: lightgreen;
+  color: var(--success-color);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
