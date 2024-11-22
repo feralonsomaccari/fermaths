@@ -1,7 +1,7 @@
 :root {
   --primary-bg: #1e1e1e;
   --primary-color: #494949;
-  --error-color: #DC143C ;
+  --error-color: #dc143c;
   --success-color: limegreen;
 }
 
@@ -11,7 +11,6 @@ body {
   color: var(--primary-color);
   width: 300px;
   height: 77px;
-  position: relative;
   font-family: Arial, Geneva, Tahoma, sans-serif;
 }
 
@@ -84,10 +83,25 @@ body {
   transform: scale(0);
   color: var(--success-color);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: #c2ffc2;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px 5px rgb(255 255 255 / 60%);
+  animation: glowingBackground 1.5s infinite alternate;
 }
 
 .animation-result {
-  animation: appearGrowFade 1s ease-in forwards;
+  animation: appearGrowFade 0.5s ease-in forwards;
+}
+
+@keyframes glowingBackground {
+  0% {
+    box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 25px 10px rgba(0, 255, 0, 0.8);
+  }
 }
 
 @keyframes appearGrowFade {
@@ -97,12 +111,17 @@ body {
   }
 
   20% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+
+  50% {
     opacity: 1;
     transform: scale(1);
   }
 
   100% {
     opacity: 0;
-    transform: scale(1.5);
+    transform: scale(2);
   }
 }
