@@ -1,6 +1,6 @@
 let score = {
-  corrects: 0,
-  misses: 0,
+  correct: 0, 
+  incorrect: 0,
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,19 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const animationResult =
     document.querySelector<HTMLSpanElement>("#animation-result");
 
-  const scoreCorrectsEl =
-    document.querySelector<HTMLInputElement>("#score-corrects");
-  const scoreMissesEl =
-    document.querySelector<HTMLInputElement>("#score-misses");
+  const scoreCorrectEl =
+    document.querySelector<HTMLInputElement>("#score-correct");
+  const scoreIncorrectEl =
+    document.querySelector<HTMLInputElement>("#score-incorrect");
 
   if (
     !firstOperand ||
     !secondOperand ||
     !operator ||
     !userResult ||
-    !animationResult ||
-    !scoreCorrectsEl ||
-    !scoreMissesEl
+    !animationResult || 
+    !scoreCorrectEl ||
+    !scoreIncorrectEl
   ) {
     console.error("Missing element");
     return;
@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
       generateRandomOperation();
     }
     if (event.code === "KeyN") {
-      score.corrects = 0;
-      score.misses = 0;
-      scoreCorrectsEl.textContent = score.corrects.toString();
-      scoreMissesEl.textContent = score.misses.toString();
+      score.correct = 0;
+      score.incorrect = 0;
+      scoreCorrectEl.textContent = score.correct.toString();
+      scoreIncorrectEl.textContent = score.incorrect.toString();
     }
   });
 
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const randomOperator =
       operators[Math.floor(Math.random() * operators.length)];
 
-    operator.textContent = randomOperator;
+    operator.textContent = randomOperator; 
 
     const largestNumberLimit = 100;
     const firstOperandValue = Math.floor(Math.random() * largestNumberLimit);
@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     firstOperand.textContent = firstOperandValue.toString();
     secondOperand.textContent = secondOperandValue.toString();
-    const handleOperation = (event: KeyboardEvent) => {
-      if (
-        event.key === "Enter" &&
-        document.activeElement === userResult &&
+    const handleOperation = (event: KeyboardEvent) => { 
+      if ( 
+        event.key === "Enter" && 
+        document.activeElement === userResult && 
         userResult.value
       ) {
         let result: number;
@@ -89,16 +89,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result === parseFloat(userResult.value)) {
           animationResult.classList.add("animation-result");
           animationResult.textContent = "CORRECT!";
-          score.corrects = score.corrects + 1;
-          scoreCorrectsEl.textContent = score.corrects.toString();
+          score.correct = score.correct + 1;
+          scoreCorrectEl.textContent = score.correct.toString();
           animationResult.addEventListener("animationend", () => {
             animationResult.style.opacity = "0";
             animationResult.style.transform = "scale(0)";
             generateRandomOperation();
           });
         } else {
-          score.misses = score.misses + 1;
-          scoreMissesEl.textContent = score.misses.toString();
+          score.incorrect = score.incorrect + 1;
+          scoreIncorrectEl.textContent = score.incorrect.toString();
         }
       }
     };
