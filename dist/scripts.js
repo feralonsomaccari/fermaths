@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
         userResult.value = userResult.value.replace(/[^0-9-]/g, "");
     });
     const generateRandomOperation = () => {
-        const operators = ["+", "-", "x", "/"];
-        const randomOperator = operators[Math.floor(Math.random() * 4)];
+        const operators = ["+", "-", "x"];
+        const randomOperator = operators[Math.floor(Math.random() * operators.length)];
         operator.textContent = randomOperator;
         const largestNumberLimit = 100;
         const firstOperandValue = Math.floor(Math.random() * largestNumberLimit);

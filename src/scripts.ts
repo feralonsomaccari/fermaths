@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const generateRandomOperation = () => {
-    const operators = ["+", "-", "x", "/"];
+    const operators = ["+", "-", "x"];
 
-    const randomOperator = operators[Math.floor(Math.random() * 4)];
+    const randomOperator = operators[Math.floor(Math.random() * operators.length)];
 
     operator.textContent = randomOperator;
 
