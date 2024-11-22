@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "fermaths",
+  "version": "1.0",
+  "description": "Simple math plugging to practice maths",
+  "permissions": [],
+  "action": {
+    "default_popup": "index.html"
+  },
+    "host_permissions": ["<all_urls>"]
+}
+
