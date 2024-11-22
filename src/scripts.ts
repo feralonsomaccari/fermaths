@@ -1,5 +1,5 @@
 let score = {
-  correct: 0, 
+  correct: 0,
   incorrect: 0,
 };
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     !secondOperand ||
     !operator ||
     !userResult ||
-    !animationResult || 
+    !animationResult ||
     !scoreCorrectEl ||
     !scoreIncorrectEl
   ) {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const randomOperator =
       operators[Math.floor(Math.random() * operators.length)];
 
-    operator.textContent = randomOperator; 
+    operator.textContent = randomOperator;
 
     const largestNumberLimit = 100;
     const firstOperandValue = Math.floor(Math.random() * largestNumberLimit);
@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     firstOperand.textContent = firstOperandValue.toString();
     secondOperand.textContent = secondOperandValue.toString();
-    const handleOperation = (event: KeyboardEvent) => { 
-      if ( 
-        event.key === "Enter" && 
-        document.activeElement === userResult && 
+    const handleOperation = (event: KeyboardEvent) => {
+      if (
+        event.key === "Enter" &&
+        document.activeElement === userResult &&
         userResult.value
       ) {
         let result: number;
@@ -99,6 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           score.incorrect = score.incorrect + 1;
           scoreIncorrectEl.textContent = score.incorrect.toString();
+          userResult.classList.add("animation-text-error");
+          userResult.addEventListener("animationend", () => {
+            userResult.classList.remove("animation-text-error");
+          });
         }
       }
     };

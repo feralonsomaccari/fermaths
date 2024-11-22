@@ -96,14 +96,32 @@ body {
   padding: 10px 20px;
   border-radius: 5px;
   box-shadow: 0 0 15px 5px rgb(255 255 255 / 60%);
-  animation: glowingBackground 1.5s infinite alternate;
+  animation: glowingSuccess 1.5s infinite alternate;
 }
 
 .animation-result {
   animation: appearGrowFade 0.5s ease-in forwards;
 }
 
-@keyframes glowingBackground {
+.animation-text-error {
+  animation: glowingError 0.5s ease-in;
+}
+
+@keyframes glowingError {
+  0% {
+    box-shadow: 0 0 10px 1px darkred;
+  }
+
+  50% {
+    box-shadow: 0 0 15px 1px var(--error-color);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes glowingSuccess {
   0% {
     box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.4);
   }
