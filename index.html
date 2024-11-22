@@ -4,15 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Popup</title>
+  <title>Fermaths</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <span id="firstOperand"></span>
-  <span id="secondOperand"></span>
-
-  <input type="text" id="result" />
+  <div id="animation-wrapper" class="animation-wrapper">
+    <span id="animation-result" class="animation-text"></span>
+  </div>
+  <span id="firstOperand" class="operand"></span>
+  <span id="operator" class="operand"></span>
+  <span id="secondOperand" class="operand"></span>
+  <span>=</span>
+  <input type="text" id="result-input" class="result-input" autocomplete="off" maxlength="4" />
 
   <script src="/dist/scripts.js" defer></script>
 </body>
