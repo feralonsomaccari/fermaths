@@ -1,7 +1,7 @@
 :root {
   --primary-bg: #1e1e1e;
   --primary-color: #494949;
-  --error-color: #dc143c;
+  --error-color: salmon;
   --success-color: limegreen;
 }
 
@@ -109,7 +109,7 @@ body {
 
 @keyframes glowingError {
   0% {
-    box-shadow: 0 0 10px 1px darkred;
+    box-shadow: 0 0 10px 1px var(--error-color);
   }
 
   50% {
