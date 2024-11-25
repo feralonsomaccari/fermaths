@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  let isAnimating = false;
+
   const currentOperands = {
     firstOperandValue: 0,
     secondOperandValue: 0,
@@ -43,6 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.activeElement === userResult &&
       userResult.value
     ) {
+
+      if(isAnimating === true) return;
+      isAnimating = true;
+
       let result: number;
 
       const { firstOperandValue, secondOperandValue, operator } =
@@ -64,29 +70,42 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
       }
 
+
       if (result === parseFloat(userResult.value)) {
         animationResult.classList.add("animation-result");
         animationResult.textContent = "CORRECT!";
         score.correct = score.correct + 1;
         scoreCorrectEl.textContent = score.correct.toString();
-        animationResult.addEventListener("animationend", () => {
-          animationResult.style.opacity = "0";
-          animationResult.style.transform = "scale(0)";
-          generateRandomOperation();
-        });
+        animationResult.addEventListener(
+          "animationend",
+          () => {
+            animationResult.classList.remove("animation-result"); 
+            animationResult.style.opacity = "0";
+            animationResult.style.transform = "scale(0)";
+            generateRandomOperation();
+            isAnimating = false;
+          },
+          { once: true },
+        );
       } else {
         score.incorrect = score.incorrect + 1;
         scoreIncorrectEl.textContent = score.incorrect.toString();
         userResult.classList.add("animation-text-error");
-        userResult.addEventListener("animationend", () => {
-          userResult.classList.remove("animation-text-error");
-        });
+        userResult.addEventListener(
+          "animationend",
+          () => {
+            userResult.classList.remove("animation-text-error");
+            isAnimating = false;
+          },
+          { once: true },
+        );
       }
     }
   };
 
   const generateRandomOperation = () => {
     const operators = ["+", "-", "x"];
+    animationResult.textContent = "";
 
     const randomOperator =
       operators[Math.floor(Math.random() * operators.length)];
