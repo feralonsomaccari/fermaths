@@ -3,14 +3,21 @@ let score = {
   incorrect: 0,
 };
 
+const currentOperands = {
+  firstOperandValue: 0,
+  secondOperandValue: 0,
+  operator: "",
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-  const firstOperand = document.querySelector<HTMLSpanElement>("#firstOperand");
-  const secondOperand =
+  const firstOperandEl =
+    document.querySelector<HTMLSpanElement>("#firstOperand");
+  const secondOperandEl =
     document.querySelector<HTMLSpanElement>("#secondOperand");
 
-  const operator = document.querySelector<HTMLSpanElement>("#operator");
+  const operatorEl = document.querySelector<HTMLSpanElement>("#operator");
   const userResult = document.querySelector<HTMLInputElement>("#result-input");
-  const animationResult =
+  const animationResultEl =
     document.querySelector<HTMLSpanElement>("#animation-result");
 
   const scoreCorrectEl =
@@ -19,11 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector<HTMLInputElement>("#score-incorrect");
 
   if (
-    !firstOperand ||
-    !secondOperand ||
-    !operator ||
+    !firstOperandEl ||
+    !secondOperandEl ||
+    !operatorEl ||
     !userResult ||
-    !animationResult ||
+    !animationResultEl ||
     !scoreCorrectEl ||
     !scoreIncorrectEl
   ) {
@@ -33,11 +40,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isAnimating = false;
 
-  const currentOperands = {
-    firstOperandValue: 0,
-    secondOperandValue: 0,
-    operator: "",
+  const generateRandomOperation = () => {
+    animationResultEl.textContent = "";
+
+    const operators = ["+", "-", "x"];
+    const randomOperator =
+      operators[Math.floor(Math.random() * operators.length)];
+
+    const largestNumberLimit = 100;
+    const firstOperandValue = Math.floor(Math.random() * largestNumberLimit);
+    const secondOperandValue = Math.floor(Math.random() * largestNumberLimit);
+
+    currentOperands.firstOperandValue = firstOperandValue;
+    currentOperands.secondOperandValue = secondOperandValue;
+    currentOperands.operator = randomOperator;
+
+    chrome.storage.local.set({ currentOperands });
+
+    userResult.value = "";
   };
+
+  // Use saved state if any
+  chrome.storage.local.get(["score"], (result) => {
+    if (result.score) {
+      score = result.score;
+      scoreCorrectEl.textContent = score.correct.toString();
+      scoreIncorrectEl.textContent = score.incorrect.toString();
+    }
+  });
+
+  chrome.storage.local.get(["currentOperands"], (result) => {
+    if (result.currentOperands) {
+      console.log(result.currentOperands);
+      currentOperands.firstOperandValue =
+        result.currentOperands.firstOperandValue;
+      currentOperands.secondOperandValue =
+        result.currentOperands.secondOperandValue;
+      currentOperands.operator = result.currentOperands.operator;
+    } else {
+      generateRandomOperation();
+    }
+    firstOperandEl.textContent = currentOperands.firstOperandValue.toString();
+    secondOperandEl.textContent = currentOperands.secondOperandValue.toString();
+    operatorEl.textContent = currentOperands.operator;
+  });
 
   const handleOperation = (event: KeyboardEvent) => {
     if (
@@ -45,8 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.activeElement === userResult &&
       userResult.value
     ) {
-
-      if(isAnimating === true) return;
+      if (isAnimating === true) return;
       isAnimating = true;
 
       let result: number;
@@ -70,27 +115,35 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
       }
 
-
       if (result === parseFloat(userResult.value)) {
-        animationResult.classList.add("animation-result");
-        animationResult.textContent = "CORRECT!";
+        animationResultEl.classList.add("animation-result");
+        animationResultEl.textContent = "CORRECT!";
         score.correct = score.correct + 1;
         scoreCorrectEl.textContent = score.correct.toString();
-        animationResult.addEventListener(
+        chrome.storage.local.set({ score });
+        animationResultEl.addEventListener(
           "animationend",
           () => {
-            animationResult.classList.remove("animation-result"); 
-            animationResult.style.opacity = "0";
-            animationResult.style.transform = "scale(0)";
+            animationResultEl.classList.remove("animation-result");
+            animationResultEl.style.opacity = "0";
+            animationResultEl.style.transform = "scale(0)";
             generateRandomOperation();
+            firstOperandEl.textContent =
+              currentOperands.firstOperandValue.toString();
+            secondOperandEl.textContent =
+              currentOperands.secondOperandValue.toString();
+            operatorEl.textContent = currentOperands.operator;
+
             isAnimating = false;
           },
           { once: true },
         );
       } else {
+        userResult.classList.add("animation-text-error");
         score.incorrect = score.incorrect + 1;
         scoreIncorrectEl.textContent = score.incorrect.toString();
-        userResult.classList.add("animation-text-error");
+        chrome.storage.local.set({ score });
+
         userResult.addEventListener(
           "animationend",
           () => {
@@ -103,32 +156,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const generateRandomOperation = () => {
-    const operators = ["+", "-", "x"];
-    animationResult.textContent = "";
-
-    const randomOperator =
-      operators[Math.floor(Math.random() * operators.length)];
-
-    operator.textContent = randomOperator;
-
-    const largestNumberLimit = 100;
-    const firstOperandValue = Math.floor(Math.random() * largestNumberLimit);
-    const secondOperandValue = Math.floor(Math.random() * largestNumberLimit);
-
-    firstOperand.textContent = firstOperandValue.toString();
-    secondOperand.textContent = secondOperandValue.toString();
-
-    currentOperands.firstOperandValue = firstOperandValue;
-    currentOperands.secondOperandValue = secondOperandValue;
-    currentOperands.operator = randomOperator;
-
-    userResult.value = "";
-  };
-
   document.addEventListener("keydown", (event) => {
     if (event.code === "KeyR") {
       generateRandomOperation();
+      firstOperandEl.textContent = currentOperands.firstOperandValue.toString();
+      secondOperandEl.textContent =
+        currentOperands.secondOperandValue.toString();
+      operatorEl.textContent = currentOperands.operator;
     }
     if (event.code === "KeyN") {
       score.correct = 0;
@@ -144,6 +178,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", handleOperation);
-
-  generateRandomOperation();
 });
+

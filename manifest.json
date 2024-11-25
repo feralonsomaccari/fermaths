@@ -3,10 +3,10 @@
   "name": "fermaths",
   "version": "1.0",
   "description": "Simple math plugging to practice maths",
-  "permissions": [],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "index.html"
   },
-    "host_permissions": ["<all_urls>"]
+  "host_permissions": ["<all_urls>"]
 }
 
