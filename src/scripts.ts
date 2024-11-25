@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   chrome.storage.local.get(["currentOperands"], (result) => {
     if (result.currentOperands) {
-      console.log(result.currentOperands);
       currentOperands.firstOperandValue =
         result.currentOperands.firstOperandValue;
       currentOperands.secondOperandValue =
